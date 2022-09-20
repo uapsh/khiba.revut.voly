@@ -2,6 +2,27 @@ title: Хіба ревуть ...
 author: uapsh
 description: Щось пересічне про непересічне
 markdown: kramdown
-remote_theme: pages-themes/slate@v0.2.0
+
+
+theme: "minima"
+
+rss: rss
+
+kramdown:
+  syntax_highlighter_opts:
+    disable: true
+    
 plugins:
-- jekyll-remote-theme 
+  - jekyll-feed
+  - jekyll-sitemap
+
+titles_from_headings:
+  strip_title: true
+  collections: true
+
+defaults:
+  - scope:
+      path: ""
+      type: post
+    values:
+      tags: Other
