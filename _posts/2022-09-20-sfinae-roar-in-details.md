@@ -171,32 +171,37 @@ template<typename, typename>
 static std::false_type test(...);
 ```
  
-От і все. Давайте спробуємо описати що генерує компілятор для `isConvertibel<int, int>`
+От і все. Давайте спробуємо описати що генерує компілятор для `isConvertibel<int, long>`
  
 ```cpp
 template<>
-struct IsConvertibleHelper<int, int>
+struct IsConvertibleHelper<int, long>
 {
-  
+
 private:
-   static void aux(int);
-  
-   template<typename F, typename T, typename = aux(std::declval<F>())>
-   static std::true_type test(void *);
- 
-   template<>
-   static std::true_type test<int, int, void>(void *);
-  
-   template<typename, typename>
-   static std::false_type test(, ...);
- 
-   template<>
-   static std::false_type test<int, int>(, ...);
-  
-  
+    static void aux(long);
+
+    template<typename F, typename T, typename = aux(std::declval<F>())>
+    static std::true_type test(void *);
+
+    template<>
+    static std::true_type test<int, long, void>(void *);
+
+    template<typename, typename>
+    static std::false_type test(, ...);
+
+    template<>
+    static std::false_type test<int, long>(, ...);
+
+
 public:
-   using Type = std::true_type;
+    using Type = std::true_type;
 };
+
+int main()
+{
+    isConvertible<long, int>;
+}
 ```
  
 Існує безліч інших аспектів використання "свиняЄ" принципу, та описати їх напевно не вистачить часу. Тому рекомендую прочитати вже згадану книгу `C++ Templates. The Complete Guide` та глянути `type_traits` власними очима. Наразі дуже багато бібліотек використовують "свиняЄ" на практиці (stl, boost, Qt, asio, і тд). Читання їх коду теж допоможе розібратися як з описаним принципом, так і з іншими аспектами мови.
